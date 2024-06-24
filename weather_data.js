@@ -1,48 +1,40 @@
-function getWeather(){
-    const apiKey = `42265d20c17f679d581c09b01d2e6d00`;
+async function getWeather() {
+    const apiKey = '';
 
     const location = document.getElementById('location').value;
     const currentTemperature = document.getElementById('currentTemperature');
-    const latitude = document.getElementById('latitudeHTML1');
-    const longitude = document.getElementById('longitudeHTML1');
+    const latitude = document.getElementById('latitude');
+    const longitude = document.getElementById('longitude');
 
-    const locationDataApiUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=&appid=${apiKey}`;
 
-    fetch(locationDataApiUrl)
-    .then(response => {
-        if (!response.ok) {
-            currentTemperature.innerHTML = '0';
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        const lat = data[0].lat;
-        const lon = data[0].lon;
+    try {
+        const locationResponse = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${apiKey}`);
+        if (!locationResponse.ok) throw new Error('Failed to fetch location data');
+
+        const locationData = await locationResponse.json();
+        const {lat, lon} = locationData[0];
         latitude.innerHTML = lat;
         longitude.innerHTML = lon;
 
-        const weatherApiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&appid=${apiKey}`;
-        fetch(weatherApiUrl)
-            .then(response => {
-                if (!response.ok) {
-                    // currentTemperature.innerHTML = '0';
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                const temperature = data.list[0].main.temp;
-                currentTemperature.innerHTML = `${temperature}°F`;
-            })
-            .catch(error => {
-                currentTemperature.innerHTML = '0';
-                console.error('Error:', error);
-            });
-    })
-    .catch(error => {
-        currentTemperature.innerHTML = '0';
-        console.error('Error:', error);
-    });
+        const currentWeatherResponse = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=imperial&appid=${apiKey}`);
+        if (!currentWeatherResponse.ok) throw new Error('Failed to fetch weather data');
+        const currentWeatherData = await currentWeatherResponse.json();
+        console.log(currentWeatherData);
+        const temperature = currentWeatherData.main.temp;
 
+        color_coding(temperature);
+
+        currentTemperature.innerHTML = `${temperature}°F`;
+
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+function color_coding(temperature) {
+    if (temperature > 80) {
+        document.getElementById("currentTemperature").style.color = "red";
+    } else {
+        document.getElementById("currentTemperature").style.color = "blue";
+    }
 }
