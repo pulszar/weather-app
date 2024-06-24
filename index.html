@@ -5,24 +5,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
-<style>
-    body { 
-        font-family: Arial, Helvetica, sans-serif;
-        text-align: center;
-    }
-</style> 
 
 <body>
     <h1>Current Weather</h1>
 
     <input id="location">
     <button onclick="getWeather()">Get weather data</button>
-    <p id="currentTemperature"></p>
-    <p id="latitudeHTML1"></p>
-    <p id="longitudeHTML1"></p>
-    <p id="location"></p>
     <script src="weather_data.js"></script>
+
+    <p id="currentTemperature"></p>
+
+    <p id="latitude"></p>
+    <p id="longitude"></p>
 </body>
 </html>
