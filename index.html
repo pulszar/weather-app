@@ -11,8 +11,13 @@
 <body>
     <h1>Current Weather</h1>
 
+    <div> 
+        <a class="navigation" href="index.html">Home</a>
+        <a class="navigation" href="customize.html">Customize</a>
+    </div>
+
     <input id="location">
-    <button onclick="getWeather()">Get weather data</button>
+    <button id = "weatherButton" onclick="getWeather()">Get weather data</button>
     <script src="weather_data.js"></script>
 
     <p id="currentTemperature"></p>
