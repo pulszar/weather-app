@@ -1,6 +1,6 @@
 # weather-app
 
-Enter a location to retrieve weather data via the OpenWeatherMap API
+Enter a location to retrieve weather data via the OpenWeatherMap API.
 
 ## Usage
 
