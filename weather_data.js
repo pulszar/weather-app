@@ -16,11 +16,19 @@ async function getWeather() {
         latitude.innerHTML = lat;
         longitude.innerHTML = lon;
 
-        const currentWeatherResponse = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=imperial&appid=${apiKey}`);
+        // const currentWeatherResponse = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=imperial&appid=${apiKey}`);
+        // if (!currentWeatherResponse.ok) throw new Error('Failed to fetch weather data');
+        // const currentWeatherData = await currentWeatherResponse.json();
+        // console.log(currentWeatherData);
+
+        const currentWeatherResponse = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`);
         if (!currentWeatherResponse.ok) throw new Error('Failed to fetch weather data');
         const currentWeatherData = await currentWeatherResponse.json();
         console.log(currentWeatherData);
-        const temperature = currentWeatherData.main.temp;
+
+
+
+        const temperature = currentWeatherData.list[0].main.temp;
 
         color_coding(temperature);
 
